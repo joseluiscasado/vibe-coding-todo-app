@@ -1,5 +1,10 @@
 import type { Item } from "../types";
 import Tag from "./Tag";
+import {
+  getDueDateStatus,
+  getDueDateBadgeClasses,
+  formatDueDate,
+} from "../utils/dueDateUtils";
 
 interface TaskCardProps {
   item: Item;
@@ -14,6 +19,9 @@ export default function TaskCard({
   onEdit,
   onDragStart,
 }: TaskCardProps) {
+  const dueDateStatus = getDueDateStatus(item.due_date);
+  const badgeClasses = getDueDateBadgeClasses(dueDateStatus);
+
   return (
     <article
       data-testid={`task-${item.id}`}
@@ -26,6 +34,14 @@ export default function TaskCard({
           <h3 className="text-sm font-medium text-slate-800">{item.name}</h3>
           {item.description && (
             <p className="mt-1 text-xs text-slate-500">{item.description}</p>
+          )}
+          {item.due_date && (
+            <span
+              data-testid={`due-date-badge-${item.id}`}
+              className={`mt-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${badgeClasses}`}
+            >
+              Due {formatDueDate(item.due_date)}
+            </span>
           )}
           {item.tags && item.tags.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1.5">
