@@ -11,10 +11,12 @@ export type DueDateStatus = "overdue" | "warning" | "ok" | "none";
  * - "ok": due in 48 hours or more
  * - "none": no due date set
  */
-export function getDueDateStatus(dueDate: string | null | undefined): DueDateStatus {
+export function getDueDateStatus(
+  dueDate: string | null | undefined,
+  now: Date = new Date(),
+): DueDateStatus {
   if (!dueDate) return "none";
 
-  const now = new Date();
   const due = new Date(dueDate);
   const diffMs = due.getTime() - now.getTime();
   const diffHours = diffMs / (1000 * 60 * 60);

@@ -60,6 +60,8 @@ class UpdateItemUseCase:
             current_item.name = dto.name
         if dto.description is not None:
             current_item.description = dto.description
+        # Use model_fields_set to distinguish "not provided" from "explicitly set to None"
+        # (None is a valid value for due_date to clear an existing due date)
         if "due_date" in dto.model_fields_set:
             current_item.due_date = dto.due_date
 

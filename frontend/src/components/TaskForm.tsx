@@ -37,7 +37,7 @@ export default function TaskForm({
   );
   const [dueDate, setDueDate] = useState<string>(
     mode === "edit" && initialData?.due_date
-      ? initialData.due_date.split("T")[0]
+      ? new Date(initialData.due_date).toISOString().split("T")[0]
       : "",
   );
 
